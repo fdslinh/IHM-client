@@ -1,38 +1,268 @@
-.App {
+/*
+vert:2db563
+Bleu:58b3da
+jaune:febc12
+mauve:7f66ad
+gris: efeff0
+*/
+
+body, *{
+  box-sizing: border-box;
+  font-family: Arial;
+  font-weight: bold;
+}
+
+.mainTab{
+  margin-bottom: 100px;
+  padding-bottom: 100px;
+}
+
+#root{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 100%;
+}
+
+@media only screen and (min-width: 400px) {
+  #root{
+    position: relative;
+    width: 400px;
+    margin: auto;
+  }
+}
+
+.App{
+  height: 100vh;
+}
+
+h2{
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 37px;
+}
+
+p{
+  text-align: center;
+  line-height: 1.7em;
+}
+.App{
+  padding: 1.5vh;
+}
+
+.error{
+  color: #d01B1b;
+  font-weight: bold;
+}
+
+input[type=text]{
+  border:none;
+  background: #ececec;
+  text-align: center;
+  width: 85%;
+  height: 30px;
+  border-radius: 15px;
+  padding: 5px;
+}
+input[type=text]:focus{
+  border-color: red;
+}
+
+input[type=text].bigInput{
+  height: 60px;
+  border-radius: 40px;
+  padding: 20px;
+  font-size: 30px;
+}
+
+.button,
+input[type=button]{
+  display: block;
+  background: none;
+  border: 2px solid black;
+  border-radius: 20px;
+  height: 40px;
+  line-height: 30px;
+  width: 85%;
+  padding: 0 10px;
+  margin: 10px auto;
+  color: black;
+  font-weight: bolder;
+  text-transform: uppercase;
   text-align: center;
 }
+input[type=text], textarea, select{
+  display: block;
+  background: none;
+  border: 2px solid black;
+  border-radius: 20px;
+  height: 40px;
+  line-height: 30px;
+  width: 85%;
+  padding: 0 10px;
+  margin: 10px auto;
+  color: black;
+  font-weight: bolder;
+  text-transform: uppercase;
+  
+}
+.button,
+input[type=button]:hover{
+  cursor: pointer;
+}
+.button.fit{
+  width: fit-content;
+}
+a.button{
+  line-height: 38px;
+}
+a.button.green,
+input[type=button].green{ color: #2db563; border-color: #2db563;}
+a.button.green:hover,
+input[type=button].green:hover{ color:#ffffff; background: #2db563; border-color: #2db563;}
+a.button.blue,
+input[type=button].blue{ color: #58b3da; border-color: #58b3da;}
+a.button.blue:hover,
+input[type=button].blue:hover{ color: #ffffff; background: #58b3da; border-color: #58b3da;}
+a.button.yellow,
+input[type=button].yellow{ color: #febc12; border-color: #febc12;}
+a.button.yellow:hover,
+input[type=button].yellow:hover{ color: #ffffff; background: #febc12; border-color: #febc12;}
+a.button.orange,
+input[type=button].orange{ color: #f39304 ; border-color: #f39304 ;}
+a.button.orange:hover,
+input[type=button].orange:hover{ color: #ffffff; background: #f39304 ; border-color: #f39304 ;}
+a.button.purple,
+input[type=button].purple{ color: #7f66ad; border-color: #7f66ad;}
+a.button.purple:hover,
+input[type=button].purple:hover{ color: #ffffff; background: #7f66ad; border-color: #7f66ad;}
+input[type=button].grey{ color: #000000; background: #ececec; border-color: #ececec;}
+input[type=button].grey:hover{ background: #cccccc; border-color: #cccccc;}
+input[type=button][disabled].grey{background: #ececec; border-color: #ececec; color: #777777}
+input[type=button][disabled].grey:hover{background: #ececec; border-color: #ececec; color: #656565}
+a.button.fullgreen,
+input[type=button].fullgreen{ background: #2db563; color:#ffffff; border-color: #2db563;}
+a.button.fullgreen:hover,
+input[type=button].fullgreen:hover{ color:#ffffff; background: #1e8b49; border-color: #1e8b49;}
+input[type=button].fullblack{ background: #000000; color:#ffffff; border-color: #000000;}
+input[type=button].white{ background: #ffffff; color:#000000; border-color: #cecece; border-width: 1px}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.button.white{
+  height: 35px;
+  line-height: 33px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0 12px;
+  background: #ffffff; color: #656565; border-color: #cecece; border-width: 1px
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.button.white.minus,
+.button.white.plus
+{
+  padding-left: 35px;
+  position:relative;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.button.white.minus::after,
+.button.white.plus::after{
+  content: ' ';
+  display: block;
+  background: #000000;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: normal;
+  top: 7px;
+  left: 9px;
+  color: #ffffff;
+}
+
+.button.white.minus::after{
+  content: '-';
+  line-height: 16px;
+}
+.button.white.plus::after{content: '+'}
+
+input[type=button].inline{
+  display: inline-block;
+  width: auto;
+  line-height: 30px;
+  height: 30px;
+  font-size: 12px;
+}
+h2 input[type=button].inline{
+  transform: translateY(-7px);
+}
+
+.header{
+  padding: 5px;
+}
+
+.header .home{
+  cursor: pointer;
+}
+
+a{
+  color: #000000;
+  font-weight: bold;
+}
+
+
+.label{
+  text-align: center;
+  width: 100%;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.radioGroup{
+  background: #ececec;
+  width: 85%;
+  padding: 0px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin: 0 auto 30px;
+  border-radius: 25px;
+}
+.radioGroup.small{
+  width: 40%;
+  background: none;
+}
+.radioGroup.clear{
+  background: none;
 }
 
-.App-link {
-  color: #61dafb;
+.radioGroup input[type=button]{
+  display: inline-block;
+  margin: 3px;
+  font-size: 11px;
+
+}
+.radioGroup input[type=button].active{
+  color:#ffffff;
+  background: #2db563;
+  border-color: #2db563;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+.radioGroup input[type=button].inactive{
+  background: none;
+  border: none;
+  color: #000000;
+}
+
+.boardSection{
+  background-color: darkgreen;
+  font-family: 'ChalkFont';
+  color:white;
+}
+
+@keyframes rainbow-animation {
   to {
-    transform: rotate(360deg);
+    background-position: 4500vh;
   }
 }

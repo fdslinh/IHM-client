@@ -1,0 +1,16 @@
+.mainPageImage{
+    width: 100%;
+    max-width: 600px;
+}
+
+h2{
+    margin-bottom: 80px;
+}
+
+a.button.homeButton,
+input[type=button].homeButton{
+    font-size: 16px;
+    font-weight: bold;
+
+    position: relative;
+}
