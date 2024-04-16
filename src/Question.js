@@ -12,7 +12,7 @@ function Question() {
     setIsLoading(true); // Bắt đầu tải
     try {
         console.log(questionId);
-      const response = await axios.get(`http://localhost:3000/api/question/${questionId}`);
+      const response = await axios.get(`https://ihm-server-bfbad1b97e15.herokuapp.com/${questionId}`);
       
       setQuestionInfo(response.data);
       
