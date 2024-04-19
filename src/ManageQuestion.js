@@ -13,7 +13,7 @@ function ManageQuestions() {
     // Logic để gửi dữ liệu câu hỏi mới đến server hoặc xử lý dữ liệu ở đây...
     console.log({ question, solution, difficulty, answer });
     try {
-      const response = await axios.post('https://ihm-server-bfbad1b97e15.herokuapp.com/', {
+      const response = await axios.post('https://ihm-server-bfbad1b97e15.herokuapp.com/api/questions', {
         code,
         question,
         solution,
