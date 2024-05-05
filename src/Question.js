@@ -7,6 +7,7 @@ import ScreenHeader from './ScreenHeader';
 function Question() {
   const [questionId, setQuestionId] = useState('');
   const [questionInfo, setQuestionInfo] = useState(null);
+  const [questionCode, setQuestionCode] = useState(null);
   const[fields, setFields]= useState(null);
   
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +23,7 @@ function Question() {
       console.log(inputs);
       setFields(inputs);
       console.log(fields);
+      setQuestionCode(response.data[0].Code);
       
     } catch (error) {
       console.error('Có lỗi xảy ra khi tìm kiếm câu hỏi:', error);
@@ -38,10 +40,26 @@ function Question() {
  const goBack=()=>{
     navigate('/');
  }
- const handleAnswerSubmit=()=>{
-  const answers=[];
+ const handleAnswerSubmit=async()=>{
+  const answers='';
   for(let i=0; i<fields.length; i++){
+    const inputID= `answer-${i}`;
+    if(i==fields.length-1){
+      answers+= document.getElementById(inputID).value;
+    }else{
+      answers+= document.getElementById(inputID).value+'_';
+    }
     
+  }
+  try {
+    const response = await axios.post('https://ihm-server-bfbad1b97e15.herokuapp.com/api/answers', {
+      questionInfo[0].Code,
+      
+      answer
+    });
+    console.log(response.data); // Xử lý dữ liệu trả về từ server
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error);
   }
  }
   return (
