@@ -29,7 +29,7 @@ body, *{
 @media only screen and (min-width: 400px) {
   #root{
     position: relative;
-    width: 400px;
+    
     margin: auto;
   }
 }
@@ -45,7 +45,7 @@ h2{
 }
 
 p{
-  text-align: center;
+  
   line-height: 1.7em;
 }
 .App{
@@ -59,8 +59,7 @@ p{
 
 input[type=text]{
   border:none;
-  background: #ececec;
-  text-align: center;
+  background: #ececec;  
   width: 85%;
   height: 30px;
   border-radius: 15px;
@@ -97,15 +96,14 @@ input[type=text], textarea, select{
   display: block;
   background: none;
   border: 2px solid black;
-  border-radius: 20px;
+  border-radius: 10px;
   height: 40px;
   line-height: 30px;
   width: 85%;
   padding: 0 10px;
   margin: 10px auto;
   color: black;
-  font-weight: bolder;
-  text-transform: uppercase;
+  
   
 }
 .button,
@@ -254,13 +252,43 @@ a{
   border: none;
   color: #000000;
 }
-
-.boardSection{
-  background-color: darkgreen;
-  font-family: 'ChalkFont';
-  color:white;
+.greenButton{
+  padding:5px;
+  border: none;
+  background-color: #DAEDD5;
+  border-radius: 10px;
 }
 
+.greenBackground{
+  background-color: #1F8505;
+}
+.greenText{
+  color:#1F8505;
+}
+.whiteText{
+  color:white;
+}
+.roundBorderBox{
+  border:1px solid #ccc;
+  border-radius: 25px;
+}
+.lineBreak{
+  border-bottom: 1px solid #79B669;
+}
+.searchSection{
+  margin-bottom: 25px;
+}
+.boardSection{
+  float:left;
+  width: 50%;
+}
+.answerSection{
+  float: left;
+  width: 50%;
+}
+.buttonSection{
+  clear:both;
+}
 @keyframes rainbow-animation {
   to {
     background-position: 4500vh;
