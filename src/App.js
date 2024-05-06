@@ -6,13 +6,16 @@ import SearchQuestion from './SearchQuestion';
 import ManageQuestions from './ManageQuestion';
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' exact Component={Home}/>
-        <Route path='/search-questions' Component={SearchQuestion}/>
-        <Route path='/manage-questions' Component={ManageQuestions}/>
-      </Routes>
-    </Router>
+    // <Router>
+    //   <Routes>
+    //     <Route path='/' exact Component={Home}/>
+    //     <Route path='/search-questions' Component={SearchQuestion}/>
+    //     <Route path='/manage-questions' Component={ManageQuestions}/>
+    //   </Routes>
+    // </Router>
+    <div>
+      <SearchQuestion />
+    </div>
   );
 }
 

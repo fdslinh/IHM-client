@@ -4,19 +4,29 @@ import './App.css';
 import './fonts/font.css';
 import { useNavigate } from 'react-router-dom';
 import ScreenHeader from './ScreenHeader';
+import ScreenFooter from './ScreenFooter';
+import { clear } from '@testing-library/user-event/dist/clear';
+
 function Question() {
+  const redStar=`image redStarImg`;
+  const greenStar=`image greenStarImg`;
+  
   const [questionId, setQuestionId] = useState('');
   const [questionInfo, setQuestionInfo] = useState(null);
   const [questionCode, setQuestionCode] = useState(null);
+  const [score, setScore] = useState(null);
+  const [starImg, setStarImg] = useState(null);
   const[fields, setFields]= useState(null);
   
   const [isLoading, setIsLoading] = useState(false);
-  const navigate= useNavigate();
+  // const navigate= useNavigate();
+  const localhost=`http://localhost:3001/`;
+  const serverURL=`https://ihm-server-bfbad1b97e15.herokuapp.com/`;
   const fetchQuestionInfo = async () => {
     setIsLoading(true); // Bắt đầu tải
     try {
         
-      const response = await axios.get(`https://ihm-server-bfbad1b97e15.herokuapp.com/api/question/${questionId}`);
+      const response = await axios.get(serverURL+`api/question/${questionId}`);
       console.log(response.data);
       setQuestionInfo(response.data);
       const inputs= Array.from({length:response.data[0].Count},(_,i)=>i);
@@ -38,10 +48,11 @@ function Question() {
 
  }
  const goBack=()=>{
-    navigate('/');
+    // navigate('/');
  }
- const handleAnswerSubmit=async()=>{
-  const answers='';
+ const handleAnswerSubmit=async(e)=>{
+  e.preventDefault();
+  let answers='';
   for(let i=0; i<fields.length; i++){
     const inputID= `answer-${i}`;
     if(i==fields.length-1){
@@ -52,12 +63,18 @@ function Question() {
     
   }
   try {
-    const response = await axios.post('https://ihm-server-bfbad1b97e15.herokuapp.com/api/answers', {
-      questionInfo[0].Code,
-      
-      answer
+    const response = await axios.post(serverURL+'api/answers', {
+      questionCode,      
+      answers
     });
     console.log(response.data); // Xử lý dữ liệu trả về từ server
+    if(response.data!='Answer incorrect'){
+      setScore(response.data[0].Grade);
+      setStarImg(greenStar);
+    }else{
+      setScore(0);
+      setStarImg(redStar);
+    }
   } catch (error) {
     console.error('Có lỗi xảy ra:', error);
   }
@@ -65,30 +82,50 @@ function Question() {
   return (
     <div>
     <ScreenHeader/>
-    <div className='roundBorderBox searchSection'>
-      <label className="whiteText">Tìm kiếm và tra cứu đáp án</label>
-      <input
-        type="text"
-        value={questionId}
-        onChange={(e) => setQuestionId(e.target.value)}
-        placeholder="Nhập mã câu hỏi"
-      />
-      <input type='button' className='button green' onClick={fetchQuestionInfo} value='Tìm kiếm'/>
+    <div className='mainSection'>
+    
+    <div className='roundBorderBox searchSection'>      
+      <div className='questionSearchSection'>
+        <label className="whiteText headerText">Tìm kiếm và tra cứu đáp án</label>
+        <div id='divSearchQuestion' className='roundBorderBox'>
+          <input id='txtSearchQuestion'
+            type="text"
+            value={questionId}
+            onChange={(e) => setQuestionId(e.target.value)}
+            placeholder="Nhập mã câu hỏi"
+          />
+          <input type='button' className='round greenBackground searchButton' onClick={fetchQuestionInfo}  />
+        </div>
+          
+          
+      </div>
+      <div className='instructionSection'></div>
     </div>
     {isLoading?(<p>Loading...</p>):
       questionInfo ? (
-        <div>
+        <div className='detailSection'>
 
         <div className='boardSection'>
-          <p className='greenText'>Câu hỏi: {questionInfo[0].Code}</p>
-          <p>{questionInfo[0].Content}</p>
+          
+          <p className='greenText'><img className='smallimage questionMark'/> Câu hỏi: {questionInfo[0].Code}</p>
+          <div style={{float:'left'}}>
+            {questionInfo[0].Content}            
+          </div>
+          <div className='smallscore'>
+              <img className='smallimage yellowStar'/>
+              {questionInfo[0].Grade} điểm
+            </div>
+            <div className='smallcard'>
+              <img className='smallimage greenCard'/>
+              {questionInfo[0].Count} thẻ
+            </div>
           <div className='lineBreak'>&nbsp;</div>
-          <p className='greenText'>Hướng dẫn giải:</p>          
+          <p className='greenText'><img className='smallimage folderIcon'/> Hướng dẫn giải:</p>          
           <p>{questionInfo[0].Solution}</p>
-          <h3>Đáp án: {questionInfo[0].Answer}</h3>
+          
         </div>
         <div className='answerSection roundBorderBox'>
-          <p className='greenText'>Kiểm tra đáp án</p>
+          <p className='greenText'><img className='smallimage checkIcon'/> Kiểm tra đáp án</p>
           <form onSubmit={handleAnswerSubmit}>
             {
               fields.map((_, index)=>(
@@ -96,19 +133,20 @@ function Question() {
               ))
             }
             <button type='submit' className='greenButton greenText'>Kiểm Tra</button>
+            <div className={starImg}><p className={score==0?'score redText':'score greenText'}>{score}</p></div>
           </form>
           
         </div>
         </div>
       ):(
-      <p>Không tìm thấy thông tin câu hỏi.</p>
-    )}
-      <div className='buttonSection'>
-        <input type='button' className='button yellow' onClick={clearQuestionInfo} value='Clear'/>
-        <input type='button' className='button orange' onClick={goBack} value='Back'/>
+        <div className='detailSection'>
+
+        <p>Không tìm thấy thông tin câu hỏi.</p>
       </div>
-      
-      
+    )}
+                  
+    </div>
+    <ScreenFooter/>
     </div>
   );
 }
