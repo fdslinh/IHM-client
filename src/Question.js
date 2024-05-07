@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import './fonts/font.css';
-import { useNavigate } from 'react-router-dom';
 import ScreenHeader from './ScreenHeader';
 import ScreenFooter from './ScreenFooter';
-import { clear } from '@testing-library/user-event/dist/clear';
+import { Container, Row, Col } from 'react-bootstrap';
 
 function Question() {
   const redStar=`image redStarImg`;
@@ -80,9 +79,16 @@ function Question() {
   }
  }
   return (
-    <div>
-    <ScreenHeader/>
-    <div className='mainSection'>
+    <Container fluid>
+      <Row>
+        <Col>
+          <ScreenHeader/>
+        </Col>
+      </Row>
+      <Row>
+        <Col>&nbsp;</Col>
+        <Col>
+        <div className='mainSection'>
     
     <div className='roundBorderBox searchSection'>      
       <div className='questionSearchSection'>
@@ -144,10 +150,15 @@ function Question() {
         <p>Không tìm thấy thông tin câu hỏi.</p>
       </div>
     )}
-                  
     </div>
-    <ScreenFooter/>
-    </div>
+        </Col>
+        <Col>&nbsp;</Col>
+      </Row>
+      <Row>
+        <Col><ScreenFooter/></Col>
+      </Row>
+    </Container>
+    
   );
 }
 
