@@ -136,7 +136,7 @@ function Question() {
           <p>{questionInfo[0].Solution}</p>
           
         </div>
-        <div className='answerSection roundBorderBox'>
+        <div className='roundBorderBox answerSection'>
           <p className='greenText'><img className='smallimage checkIcon'/> Kiểm tra đáp án</p>
           <form onSubmit={handleAnswerSubmit}>
             {

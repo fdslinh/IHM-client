@@ -276,7 +276,8 @@ a{
   float: left;
   width: 50%;
   margin-top: 10px;
-  height: 500px;
+  height: auto;
+  min-height: 200px;
 }
 .buttonSection{
   clear:both;
