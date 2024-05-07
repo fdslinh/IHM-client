@@ -4,7 +4,7 @@ import './App.css';
 import './fonts/font.css';
 import ScreenHeader from './ScreenHeader';
 import ScreenFooter from './ScreenFooter';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
 function Question() {
   const redStar=`image redStarImg`;
@@ -18,6 +18,7 @@ function Question() {
   const[fields, setFields]= useState(null);
   
   const [isLoading, setIsLoading] = useState(false);
+  const [isAnswerLoading, setIsAnswerLoading] = useState(false);
   // const navigate= useNavigate();
   const localhost=`http://localhost:3001/`;
   const serverURL=`https://ihm-server-bfbad1b97e15.herokuapp.com/`;
@@ -74,8 +75,11 @@ function Question() {
       setScore(0);
       setStarImg(redStar);
     }
+    setIsAnswerLoading(true);
   } catch (error) {
     console.error('Có lỗi xảy ra:', error);
+  }finally{
+    setIsAnswerLoading(false);
   }
  }
   return (
@@ -107,7 +111,9 @@ function Question() {
       </div>
       <div className='instructionSection'></div>
     </div>
-    {isLoading?(<p>Loading...</p>):
+    {isLoading || isAnswerLoading?(<Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>):
       questionInfo ? (
         <div className='detailSection'>
 
