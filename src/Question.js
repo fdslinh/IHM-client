@@ -96,7 +96,7 @@ function Question() {
     
     <div className='roundBorderBox searchSection'>      
       <div className='questionSearchSection'>
-        <label className="whiteText headerText">Tìm kiếm và tra cứu đáp án</label>
+        <label className="whiteText headerText">Tìm kiếm <br/> và tra cứu đáp án</label>
         <div id='divSearchQuestion' className='roundBorderBox'>
           <input id='txtSearchQuestion'
             type="text"

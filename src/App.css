@@ -128,7 +128,9 @@ h2 input[type=button].inline{
 }
 
 .header{
-  padding: 5px;
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
 }
 
 .header .home{
@@ -207,7 +209,9 @@ a{
 .darkgreenBackground{
   background-color: #0B2E02;
 }
+
 .greenBackground{
+  padding: auto;
   background-color: #1F8505;
 }
 .greenText{
