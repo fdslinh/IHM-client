@@ -22,11 +22,12 @@ function Question() {
   // const navigate= useNavigate();
   const localhost=`http://localhost:3001/`;
   const serverURL=`https://ihm-server-bfbad1b97e15.herokuapp.com/`;
+  const server= localhost;
   const fetchQuestionInfo = async () => {
     setIsLoading(true); // Bắt đầu tải
     try {
         
-      const response = await axios.get(serverURL+`api/question/${questionId}`);
+      const response = await axios.get(server+`api/question/${questionId}`);
       console.log(response.data);
       setQuestionInfo(response.data);
       const inputs= Array.from({length:response.data[0].Count},(_,i)=>i);
@@ -34,6 +35,8 @@ function Question() {
       setFields(inputs);
       console.log(fields);
       setQuestionCode(response.data[0].Code);
+      setStarImg(null);
+      setScore(null);
       
     } catch (error) {
       console.error('Có lỗi xảy ra khi tìm kiếm câu hỏi:', error);
@@ -63,7 +66,7 @@ function Question() {
     
   }
   try {
-    const response = await axios.post(serverURL+'api/answers', {
+    const response = await axios.post(server+'api/answers', {
       questionCode,      
       answers
     });
@@ -90,7 +93,7 @@ function Question() {
         </Col>
       </Row>
       <Row>
-        <Col>&nbsp;</Col>
+        
         <Col>
         <div className='mainSection'>
     
@@ -111,7 +114,7 @@ function Question() {
       </div>
       <div className='instructionSection'></div>
     </div>
-    {isLoading || isAnswerLoading?(<Spinner animation="border" role="status">
+    {(isLoading || isAnswerLoading)?(<Spinner animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner>):
       questionInfo ? (
@@ -158,7 +161,7 @@ function Question() {
     )}
     </div>
         </Col>
-        <Col>&nbsp;</Col>
+        
       </Row>
       <Row>
         <Col><ScreenFooter/></Col>
