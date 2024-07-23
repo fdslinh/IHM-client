@@ -62,9 +62,19 @@ function Question() {
       answers+= document.getElementById(inputID).value;
     }else{
       answers+= document.getElementById(inputID).value+'_';
-    }
-    
+    }    
   }
+  answers+=',';
+  let revsereAnswer='';
+  for(let i=fields.length-1; i>=0; i--){
+    const inputID= `answer-${i}`;
+    if(i==0){
+      revsereAnswer+= document.getElementById(inputID).value;
+    }else{
+      revsereAnswer+= document.getElementById(inputID).value+'_';
+    }    
+  }
+  answers+=revsereAnswer;
   try {
     const response = await axios.post(server+'api/answers', {
       questionCode,      
