@@ -22,7 +22,7 @@ function Question() {
   // const navigate= useNavigate();
   const localhost=`http://localhost:3001/`;
   const serverURL=`https://ihm-server-bfbad1b97e15.herokuapp.com/`;
-  const server= localhost;
+  const server= serverURL;
   const fetchQuestionInfo = async () => {
     setIsLoading(true); // Bắt đầu tải
     try {
