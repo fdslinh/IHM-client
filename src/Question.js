@@ -4,7 +4,8 @@ import './App.css';
 import './fonts/font.css';
 import ScreenHeader from './ScreenHeader';
 import ScreenFooter from './ScreenFooter';
-import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import {Spinner} from 'react-bootstrap';
 
 function Question() {
   const redStar=`image redStarImg`;
@@ -17,6 +18,7 @@ function Question() {
   const [starImg, setStarImg] = useState(null);
   const[fields, setFields]= useState(null);
   
+  const [isClick, setIsClick] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isAnswerLoading, setIsAnswerLoading] = useState(false);
   // const navigate= useNavigate();
@@ -25,6 +27,7 @@ function Question() {
   const server= serverURL;
   const fetchQuestionInfo = async () => {
     setIsLoading(true); // Bắt đầu tải
+    setIsClick(true);
     try {
         
       const response = await axios.get(server+`api/question/${questionId}`);
@@ -53,6 +56,7 @@ function Question() {
  const goBack=()=>{
     // navigate('/');
  }
+
  const handleAnswerSubmit=async(e)=>{
   e.preventDefault();
   let answers='';
@@ -75,6 +79,7 @@ function Question() {
     }    
   }
   answers+=revsereAnswer;
+  console.log(answers);
   try {
     const response = await axios.post(server+'api/answers', {
       questionCode,      
@@ -110,22 +115,24 @@ function Question() {
     <div className='roundBorderBox searchSection'>      
       <div className='questionSearchSection'>
         <label className="whiteText headerText">Tìm kiếm <br/> và tra cứu đáp án</label>
-        <div id='divSearchQuestion' className='roundBorderBox'>
+        <div id='divSearchQuestion'  className='roundBorderBox'>
+        
           <input id='txtSearchQuestion'
             type="text"
             value={questionId}
             onChange={(e) => setQuestionId(e.target.value)}
             placeholder="Nhập mã câu hỏi"
           />
-          <input type='button' className='round greenBackground searchButton' onClick={fetchQuestionInfo}  />
+          
         </div>
+        <input type='button' className='round greenBackground searchButton' onClick={fetchQuestionInfo}  />
           
           
       </div>
       <div className='instructionSection'></div>
     </div>
     {(isLoading || isAnswerLoading)?(<Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
+          
         </Spinner>):
       questionInfo ? (
         <div className='detailSection'>
@@ -138,11 +145,11 @@ function Question() {
           </div>
           <div className='smallscore'>
               <img className='smallimage yellowStar'/>
-              {questionInfo[0].Grade} điểm
+              <p className='questionInfo'>{questionInfo[0].Grade} điểm</p>
             </div>
             <div className='smallcard'>
               <img className='smallimage greenCard'/>
-              {questionInfo[0].Count} thẻ
+              <p className='questionInfo'>{questionInfo[0].Count} thẻ</p>
             </div>
           <div className='lineBreak'>&nbsp;</div>
           <p className='greenText'><img className='smallimage folderIcon'/> Hướng dẫn giải:</p>          
@@ -163,12 +170,13 @@ function Question() {
           
         </div>
         </div>
-      ):(
+      ):isClick?(
         <div className='detailSection'>
-
-        <p>Không tìm thấy thông tin câu hỏi.</p>
+        <p>Không tìm thấy thông tin câu hỏi.</p>        
       </div>
-    )}
+    ):(<div className='detailSection'>
+        
+      </div>)}
     </div>
         </Col>
         

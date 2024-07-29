@@ -11,6 +11,10 @@ body, *{
   font-family: Arial;
   font-weight: bold;
 }
+.questionInfo{
+  margin:5px;
+  float:left;
+}
 label{
   margin-bottom: 20px;
 }
@@ -189,7 +193,7 @@ a{
   width: 40px;
 }
 .searchButton{
-  background-image: url(/public/asset/search.svg);
+  background-image: url(/public/asset/search.png);
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -320,10 +324,10 @@ img{
   background-image: url(/public/images/green-star.png);
 }
 .questionMark{
-  background-image: url(/public/asset/question-mark.svg);
+  background-image: url(/public/asset/question-mark.png);
 }
 .checkIcon{
-  background-image: url(/public/asset/check.svg);
+  background-image: url(/public/asset/check.png);
 }
 
 .smallscore{
@@ -333,7 +337,7 @@ img{
   border-radius: 12px;
 }
 .yellowStar{
-  background-image: url(/public/asset/star.svg);
+  background-image: url(/public/asset/star.png);
 }
 .smallcard{
   background-color: #DAEDD5;
@@ -342,7 +346,13 @@ img{
   border-radius: 12px;
 }
 .greenCard{
-  background-image: url(/public/asset/card.svg);
+  background-image: url(/public/asset/card.png);
+}
+input:focus{
+  outline:none;
+}
+#divSearchQuestion{
+  border:none;
 }
 @keyframes rainbow-animation {
   to {
