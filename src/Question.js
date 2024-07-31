@@ -25,7 +25,8 @@ function Question() {
   const localhost=`http://localhost:3001/`;
   const serverURL=`https://ihm-server-bfbad1b97e15.herokuapp.com/`;
   const server= serverURL;
-  const fetchQuestionInfo = async () => {
+  const fetchQuestionInfo = async (event) => {
+    event.preventDefault();
     setIsLoading(true); // Bắt đầu tải
     setIsClick(true);
     try {
@@ -115,25 +116,29 @@ function Question() {
     <div className='roundBorderBox searchSection'>      
       <div className='questionSearchSection'>
         <label className="whiteText headerText">Tìm kiếm <br/> và tra cứu đáp án</label>
+        <form onSubmit={fetchQuestionInfo}>
         <div id='divSearchQuestion'  className='roundBorderBox'>
         
-          <input id='txtSearchQuestion'
-            type="text"
-            value={questionId}
-            onChange={(e) => setQuestionId(e.target.value)}
-            placeholder="Nhập mã câu hỏi"
-          />
-          
-        </div>
-        <input type='button' className='round greenBackground searchButton' onClick={fetchQuestionInfo}  />
+        <input id='txtSearchQuestion'
+          type="text"
+          value={questionId}
+          onChange={(e) => setQuestionId(e.target.value)}
+          placeholder="Nhập mã câu hỏi"
+        />
+        
+      </div>
+      <button type='submit' className='round greenBackground searchButton' onClick={fetchQuestionInfo}  />
+        </form>
+        
           
           
       </div>
       <div className='instructionSection'></div>
     </div>
-    {(isLoading || isAnswerLoading)?(<Spinner animation="border" role="status">
-          
-        </Spinner>):
+    {(isLoading || isAnswerLoading)?(
+      <div className='detailSection'>
+      <Spinner animation="border" role="status"></Spinner>
+      </div>):
       questionInfo ? (
         <div className='detailSection'>
 

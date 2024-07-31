@@ -190,12 +190,14 @@ a{
 }
 .round{
   border-radius: 50%;
+  height: 40px;
   width: 40px;
 }
 .searchButton{
   background-image: url(/public/asset/search.png);
   background-repeat: no-repeat;
   background-position: center;
+  border: none;
 }
 .greenButton{
   padding:5px;
