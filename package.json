@@ -2,7 +2,7 @@
   "name": "question-manager",
   "version": "0.1.0",
   "engines": {
-    "node": "20.x"
+    "node": "16.15.0"
   },
   "private": true,
   "dependencies": {
