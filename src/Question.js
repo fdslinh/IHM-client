@@ -23,22 +23,24 @@ function Question() {
   const [isAnswerLoading, setIsAnswerLoading] = useState(false);
   // const navigate= useNavigate();
   const localhost=`http://localhost:3001/`;
-  const serverURL=`https://ihm-server-bfbad1b97e15.herokuapp.com/`;
-  const server= serverURL;
+  // const serverURL=`https://ihm-server-bfbad1b97e15.herokuapp.com/`;
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const server= serverUrl;
   const fetchQuestionInfo = async (event) => {
     event.preventDefault();
     setIsLoading(true); // Bắt đầu tải
     setIsClick(true);
     try {
         
-      const response = await axios.get(server+`api/question/${questionId}`);
+      const response = await axios.get(`${server}/api/question/${questionId}`);
       console.log(response.data);
       setQuestionInfo(response.data);
-      const inputs= Array.from({length:response.data[0].Count},(_,i)=>i);
+      const inputs= response.data[0].question_type;
+      //Array.from({length:response.data[0].Count},(_,i)=>i);
       console.log(inputs);
       setFields(inputs);
       console.log(fields);
-      setQuestionCode(response.data[0].Code);
+      setQuestionCode(response.data[0].question_code);
       setStarImg(null);
       setScore(null);
       
@@ -61,34 +63,24 @@ function Question() {
  const handleAnswerSubmit=async(e)=>{
   e.preventDefault();
   let answers='';
-  for(let i=0; i<fields.length; i++){
+  for(let i=0; i<fields; i++){
     const inputID= `answer-${i}`;
-    if(i==fields.length-1){
+    if(i==fields-1){
       answers+= document.getElementById(inputID).value;
     }else{
       answers+= document.getElementById(inputID).value+'_';
     }    
   }
-  answers+=',';
-  let revsereAnswer='';
-  for(let i=fields.length-1; i>=0; i--){
-    const inputID= `answer-${i}`;
-    if(i==0){
-      revsereAnswer+= document.getElementById(inputID).value;
-    }else{
-      revsereAnswer+= document.getElementById(inputID).value+'_';
-    }    
-  }
-  answers+=revsereAnswer;
+  
   console.log(answers);
   try {
-    const response = await axios.post(server+'api/answers', {
+    const response = await axios.post('${server}/api/answers', {
       questionCode,      
       answers
     });
     console.log(response.data); // Xử lý dữ liệu trả về từ server
     if(response.data!='Answer incorrect'){
-      setScore(response.data[0].Grade);
+      setScore(response.data);
       setStarImg(greenStar);
     }else{
       setScore(0);
@@ -146,26 +138,26 @@ function Question() {
           
           <p className='greenText'><img className='smallimage questionMark'/> Câu hỏi: {questionInfo[0].Code}</p>
           <div style={{float:'left'}}>
-            {questionInfo[0].Content}            
+            {questionInfo[0].question_text}            
           </div>
           <div className='smallscore'>
               <img className='smallimage yellowStar'/>
-              <p className='questionInfo'>{questionInfo[0].Grade} điểm</p>
+              <p className='questionInfo'>{questionInfo[0].score} điểm</p>
             </div>
             <div className='smallcard'>
               <img className='smallimage greenCard'/>
-              <p className='questionInfo'>{questionInfo[0].Count} thẻ</p>
+              <p className='questionInfo'>{questionInfo[0].question_type} thẻ</p>
             </div>
           <div className='lineBreak'>&nbsp;</div>
           <p className='greenText'><img className='smallimage folderIcon'/> Hướng dẫn giải:</p>          
-          <p>{questionInfo[0].Solution}</p>
+          <p>{questionInfo[0].question_solution}</p>
           
         </div>
         <div className='roundBorderBox answerSection'>
           <p className='greenText'><img className='smallimage checkIcon'/> Kiểm tra đáp án</p>
           <form onSubmit={handleAnswerSubmit}>
             {
-              fields.map((_, index)=>(
+              Array.from({length:fields}).map((_, index)=>(
                 <input type="text" id={`answer-${index}`} key={index} placeholder='Nhập đáp án để kiểm tra'/>
               ))
             }
