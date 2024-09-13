@@ -23,9 +23,10 @@ function Question() {
   const [isAnswerLoading, setIsAnswerLoading] = useState(false);
   // const navigate= useNavigate();
   const localhost=`http://localhost:3001`;
-  const serverURL=`https://ihm-server.fly.dev/`;
+  const serverURL=`https://ihm-server-f8b0fc8658d8.herokuapp.com/`;
+  // const serverURL=`https://ihm-server.fly.dev`;
   const url= serverURL;
-  const server= url;
+  
   let socket;
   const fetchQuestionInfo = async (event) => {
     event.preventDefault();
@@ -72,7 +73,7 @@ function Question() {
     // }
     try {
 
-      const response = await axios.get(`${server}/api/question/${questionId}`);
+      const response = await axios.get(`${url}/api/question/${questionId}`);
       console.log(response.data);
       setQuestionInfo(response.data);
       const inputs = response.data[0].question_type;
@@ -114,7 +115,7 @@ function Question() {
   
   console.log(answers);
   try {
-    const response = await axios.post(`${server}/api/answers`, {
+    const response = await axios.post(`${url}/api/answers`, {
       questionCode,      
       answers
     });
