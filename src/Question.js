@@ -23,7 +23,7 @@ function Question() {
   const [isAnswerLoading, setIsAnswerLoading] = useState(false);
   // const navigate= useNavigate();
   const localhost=`http://localhost:3001`;
-  const serverURL=`https://ihm-server-f8b0fc8658d8.herokuapp.com/`;
+  const serverURL=`https://ihm-server-f8b0fc8658d8.herokuapp.com`;
   // const serverURL=`https://ihm-server.fly.dev`;
   const url= serverURL;
   
