@@ -23,54 +23,14 @@ function Question() {
   const [isAnswerLoading, setIsAnswerLoading] = useState(false);
   // const navigate= useNavigate();
   const localhost=`http://localhost:3001`;
-  const serverURL=`https://ihm-server-f8b0fc8658d8.herokuapp.com`;
-  // const serverURL=`https://ihm-server.fly.dev`;
-  const url= serverURL;
-  
-  let socket;
+  //const serverURL=`https://ihm-server-f8b0fc8658d8.herokuapp.com`;
+  const serverURL=`https://ihm-server.fly.dev`;
+  const url= serverURL;    
   const fetchQuestionInfo = async (event) => {
     event.preventDefault();
     setIsLoading(true); // Bắt đầu tải
     setIsClick(true);
-    // if (!socket || socket.readyState !== WebSocket.OPEN) {
-    //   socket = new WebSocket(server);
-    //   socket.onopen = () => {
-    //     console.log('WebSocket connection opened.');
-    //     socket.send(JSON.stringify({ action: 'getQuestionInfo', questionId: questionId }));
-    //   };
-    //   socket.onmessage = (messageEvent) => {
-    //     const data = JSON.parse(messageEvent.data);
-    //     console.log('Dữ liệu nhận được từ server:', data);
-    //     if (data && data.length > 0) {
-    //       console.log(data);
-    //       setQuestionInfo(data);
-    //       const inputs = data[0].question_type;
-    //       //Array.from({length:response.data[0].Count},(_,i)=>i);
-    //       console.log(inputs);
-    //       setFields(inputs);
-    //       console.log(fields);
-    //       setQuestionCode(data[0].question_code);
-    //       setStarImg(null);
-    //       setScore(null);
-    //     } else {
-    //       console.error('Không có dữ liệu hoặc dữ liệu không hợp lệ');
-    //       setQuestionInfo(null);
-    //     }
-    //     setIsLoading(false);
-    //   };
-    //   socket.onerror = (error) => {
-    //     console.error('Có lỗi xảy ra với WebSocket:', error);
-    //     setQuestionInfo(null); // Xử lý trường hợp lỗi hoặc không tìm thấy câu hỏi
-    //     setIsLoading(false); // Kết thúc tải
-    //   };
-
-    //   // Xử lý khi kết nối WebSocket bị đóng
-    //   socket.onclose = () => {
-    //     console.log('WebSocket connection closed.');
-    //   };
-    // } else {
-    //   socket.send(JSON.stringify({ action: 'getQuestionInfo', questionId: questionId }));
-    // }
+   
     try {
 
       const response = await axios.get(`${url}/api/question/${questionId}`);
@@ -106,7 +66,7 @@ function Question() {
   let answers='';
   for(let i=0; i<fields; i++){
     const inputID= `answer-${i}`;
-    if(i==fields-1){
+    if(i===fields-1){
       answers+= document.getElementById(inputID).value;
     }else{
       answers+= document.getElementById(inputID).value+'_';
