@@ -22,20 +22,60 @@ function Question() {
   const [isLoading, setIsLoading] = useState(false);
   const [isAnswerLoading, setIsAnswerLoading] = useState(false);
   // const navigate= useNavigate();
-  const localhost=`http://localhost:3001/`;
-  // const serverURL=`https://ihm-server-bfbad1b97e15.herokuapp.com/`;
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
-  const server= serverUrl;
+  const localhost=`http://localhost:3001`;
+  const serverURL=`https://ihm-server.fly.dev/`;
+  const url= serverURL;
+  const server= url;
+  let socket;
   const fetchQuestionInfo = async (event) => {
     event.preventDefault();
     setIsLoading(true); // Bắt đầu tải
     setIsClick(true);
+    // if (!socket || socket.readyState !== WebSocket.OPEN) {
+    //   socket = new WebSocket(server);
+    //   socket.onopen = () => {
+    //     console.log('WebSocket connection opened.');
+    //     socket.send(JSON.stringify({ action: 'getQuestionInfo', questionId: questionId }));
+    //   };
+    //   socket.onmessage = (messageEvent) => {
+    //     const data = JSON.parse(messageEvent.data);
+    //     console.log('Dữ liệu nhận được từ server:', data);
+    //     if (data && data.length > 0) {
+    //       console.log(data);
+    //       setQuestionInfo(data);
+    //       const inputs = data[0].question_type;
+    //       //Array.from({length:response.data[0].Count},(_,i)=>i);
+    //       console.log(inputs);
+    //       setFields(inputs);
+    //       console.log(fields);
+    //       setQuestionCode(data[0].question_code);
+    //       setStarImg(null);
+    //       setScore(null);
+    //     } else {
+    //       console.error('Không có dữ liệu hoặc dữ liệu không hợp lệ');
+    //       setQuestionInfo(null);
+    //     }
+    //     setIsLoading(false);
+    //   };
+    //   socket.onerror = (error) => {
+    //     console.error('Có lỗi xảy ra với WebSocket:', error);
+    //     setQuestionInfo(null); // Xử lý trường hợp lỗi hoặc không tìm thấy câu hỏi
+    //     setIsLoading(false); // Kết thúc tải
+    //   };
+
+    //   // Xử lý khi kết nối WebSocket bị đóng
+    //   socket.onclose = () => {
+    //     console.log('WebSocket connection closed.');
+    //   };
+    // } else {
+    //   socket.send(JSON.stringify({ action: 'getQuestionInfo', questionId: questionId }));
+    // }
     try {
-        
+
       const response = await axios.get(`${server}/api/question/${questionId}`);
       console.log(response.data);
       setQuestionInfo(response.data);
-      const inputs= response.data[0].question_type;
+      const inputs = response.data[0].question_type;
       //Array.from({length:response.data[0].Count},(_,i)=>i);
       console.log(inputs);
       setFields(inputs);
@@ -43,12 +83,12 @@ function Question() {
       setQuestionCode(response.data[0].question_code);
       setStarImg(null);
       setScore(null);
-      
+
     } catch (error) {
       console.error('Có lỗi xảy ra khi tìm kiếm câu hỏi:', error);
       setQuestionInfo(null); // Xử lý trường hợp lỗi hoặc không tìm thấy câu hỏi
-    }finally{
-        setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
  const clearQuestionInfo=()=>{
@@ -74,7 +114,7 @@ function Question() {
   
   console.log(answers);
   try {
-    const response = await axios.post('${server}/api/answers', {
+    const response = await axios.post(`${server}/api/answers`, {
       questionCode,      
       answers
     });
@@ -136,7 +176,7 @@ function Question() {
 
         <div className='boardSection'>
           
-          <p className='greenText'><img className='smallimage questionMark'/> Câu hỏi: {questionInfo[0].Code}</p>
+          <p className='greenText'> Câu hỏi: {questionInfo[0].Code}</p>
           <div style={{float:'left'}}>
             {questionInfo[0].question_text}            
           </div>
@@ -149,12 +189,17 @@ function Question() {
               <p className='questionInfo'>{questionInfo[0].question_type} thẻ</p>
             </div>
           <div className='lineBreak'>&nbsp;</div>
-          <p className='greenText'><img className='smallimage folderIcon'/> Hướng dẫn giải:</p>          
+          <p className='greenText'>
+            {/* <img className='smallimage folderIcon'/>  */}
+            Hướng dẫn giải:
+          </p>          
           <p>{questionInfo[0].question_solution}</p>
           
         </div>
         <div className='roundBorderBox answerSection'>
-          <p className='greenText'><img className='smallimage checkIcon'/> Kiểm tra đáp án</p>
+          <p className='greenText'>
+            {/* <img className='smallimage checkIcon'/>  */}
+            Kiểm tra đáp án</p>
           <form onSubmit={handleAnswerSubmit}>
             {
               Array.from({length:fields}).map((_, index)=>(

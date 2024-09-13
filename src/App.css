@@ -292,7 +292,7 @@ a{
 }
 .score{
   position: absolute;
-  top: -9%;
+  top: 25%;
   left: 38%;
   font-size: 44px;
 }
@@ -309,6 +309,12 @@ img{
   float: left;
   border: none;
 }
+.smallimage::before,
+.smallimage::after {
+  border: none !important;
+  outline: none !important;
+}
+
 .image{
   width: 160px;
   height: 150px;
