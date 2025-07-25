@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 function ManageQuestions() {
+  const navigate = useNavigate();
   const [question, setQuestion] = useState('');
   const [solution, setSolution] = useState('');
   const [difficulty, setDifficulty] = useState('1');
@@ -32,41 +34,50 @@ function ManageQuestions() {
     setAnswer('');
   };
 
+  const handleCreateNew = () => {
+    navigate("/question-detail/new");
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-      <label>Mã câu hỏi:</label>
-      <input type='text' value={code} onChange={(e)=>setCode(e.target.value)}/>
-        <label>Nội dung câu hỏi:</label>
-        <input
-          type="text"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Lời giải:</label>
-        <textarea
-          value={solution}
-          onChange={(e) => setSolution(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Độ khó:</label>
-        <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-          <option value="1">Dễ</option>
-          <option value="2">Trung Bình</option>
-          <option value="3">Khó</option>
-        </select>
-      </div>
-      <div>
-        <label>Đáp án:</label>
-        <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)}/>
-          
-        
-      </div>
-      <button type="submit">Tạo Câu Hỏi</button>
-    </form>
+    <div style={{ maxWidth: 800, margin: "40px auto" }}>
+      <button onClick={handleCreateNew} style={{ marginBottom: 16, padding: "8px 20px", borderRadius: 6, border: "1px solid #3a7ca5", background: "#3a7ca5", color: "#fff", fontWeight: 600, cursor: "pointer" }}>
+        + Tạo mới câu hỏi
+      </button>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Mã câu hỏi:</label>
+          <input type='text' value={code} onChange={(e)=>setCode(e.target.value)}/>
+          <label>Nội dung câu hỏi:</label>
+          <input
+            type="text"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Lời giải:</label>
+          <textarea
+            value={solution}
+            onChange={(e) => setSolution(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Độ khó:</label>
+          <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+            <option value="1">Dễ</option>
+            <option value="2">Trung Bình</option>
+            <option value="3">Khó</option>
+          </select>
+        </div>
+        <div>
+          <label>Đáp án:</label>
+          <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)}/>
+
+
+        </div>
+        <button type="submit">Tạo Câu Hỏi</button>
+      </form>
+    </div>
   );
 }
 

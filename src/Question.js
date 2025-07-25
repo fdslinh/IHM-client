@@ -25,7 +25,7 @@ function Question() {
   const localhost=`http://localhost:3001`;
   //const serverURL=`https://ihm-server-f8b0fc8658d8.herokuapp.com`;
   const serverURL=`https://ihm-server.fly.dev`;
-  const url= serverURL;    
+  const url= localhost;    
   const fetchQuestionInfo = async (event) => {
     event.preventDefault();
     setIsLoading(true); // Bắt đầu tải
