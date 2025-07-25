@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import axios from 'axios';
 
 
 export default function QuestionDetail() {
@@ -40,11 +41,16 @@ export default function QuestionDetail() {
     setEditData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = () => {
-    // Gọi API cập nhật ở đây, ví dụ:
-    // fetch(`/api/question/${id}`, { method: 'PUT', body: JSON.stringify(editData), headers: { 'Content-Type': 'application/json' } })
-    setQuestion(editData);
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+      // Gọi API lưu câu hỏi
+      await axios.post('/api/save-question', editData);
+      setQuestion(editData);
+      setIsEditing(false);
+    } catch (error) {
+      alert('Lưu câu hỏi thất bại!');
+      console.error(error);
+    }
   };
 
   const handleCancel = () => {
