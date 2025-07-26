@@ -36,12 +36,12 @@ function Question() {
       const response = await axios.get(`${url}/api/question/${questionId}`);
       console.log(response.data);
       setQuestionInfo(response.data);
-      const inputs = response.data[0].question_type;
+      const inputs = response.data[0].Count;
       //Array.from({length:response.data[0].Count},(_,i)=>i);
       console.log(inputs);
       setFields(inputs);
       console.log(fields);
-      setQuestionCode(response.data[0].question_code);
+      setQuestionCode(response.data[0].Code);
       setStarImg(null);
       setScore(null);
 
@@ -81,7 +81,7 @@ function Question() {
     });
     console.log(response.data); // Xử lý dữ liệu trả về từ server
     if(response.data!='Answer incorrect'){
-      setScore(response.data);
+      setScore(response.data.Grade);
       setStarImg(greenStar);
     }else{
       setScore(0);
@@ -139,22 +139,22 @@ function Question() {
           
           <p className='greenText'> Câu hỏi: {questionInfo[0].Code}</p>
           <div style={{float:'left'}}>
-            {questionInfo[0].question_text}            
+            {questionInfo[0].Content}            
           </div>
           <div className='smallscore'>
               <img className='smallimage yellowStar'/>
-              <p className='questionInfo'>{questionInfo[0].score} điểm</p>
+              <p className='questionInfo'>{questionInfo[0].Grade} điểm</p>
             </div>
             <div className='smallcard'>
               <img className='smallimage greenCard'/>
-              <p className='questionInfo'>{questionInfo[0].question_type} thẻ</p>
+              <p className='questionInfo'>{questionInfo[0].Count} thẻ</p>
             </div>
           <div className='lineBreak'>&nbsp;</div>
           <p className='greenText'>
             {/* <img className='smallimage folderIcon'/>  */}
             Hướng dẫn giải:
           </p>          
-          <p>{questionInfo[0].question_solution}</p>
+          <p>{questionInfo[0].Answer}</p>
           
         </div>
         <div className='roundBorderBox answerSection'>

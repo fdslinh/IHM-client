@@ -6,6 +6,10 @@ import axios from 'axios';
 
 
 export default function QuestionDetail() {
+  const localhost=`http://localhost:3001`;
+  //const serverURL=`https://ihm-server-f8b0fc8658d8.herokuapp.com`;
+  const serverURL=`https://ihm-server.fly.dev`;
+  const url= localhost;    
   const { id } = useParams();
   const navigate = useNavigate();
   const [question, setQuestion] = useState({
@@ -21,20 +25,30 @@ export default function QuestionDetail() {
   const [editData, setEditData] = useState({ ...question });
   // Giả lập fetch, thay bằng API thực tế nếu có
   useEffect(() => {
-    // fetch(`/api/question/${id}`)
-    //   .then(res => res.json())
-    //   .then(data => { setQuestion(data); setEditData(data); });
-    const data = {
-      id: id,
-      code: "Q1",
-      text: "Ví dụ nội dung câu hỏi",
-      solution: "<p>Ví dụ hướng dẫn giải</p>",
-      answer: "Đáp án ví dụ",
-      grade:1,
-      isMultiAnswer: false,
-    };
-    setQuestion(data);
-    setEditData(data);
+    if (id === '0' || id === 0) {
+      const empty = {
+        id: 0,
+        code: '',
+        text: '',
+        solution: '',
+        answer: '',
+        grade: 0,
+        isMultiAnswer: 1,
+      };
+      setQuestion(empty);
+      setEditData(empty);
+    } else {
+      axios.get(`${url}/api/question-by-id/${id}`)
+        .then(res => {
+          // Nếu server trả về mảng, lấy phần tử đầu tiên
+          const data = Array.isArray(res.data) ? res.data[0] : res.data;
+          setQuestion(data);
+          setEditData(data);
+        })
+        .catch(() => {
+          alert('Không tìm thấy câu hỏi!');
+        });
+    }
   }, [id]);
 
   const handleChange = (field, value) => {
@@ -44,7 +58,7 @@ export default function QuestionDetail() {
   const handleSave = async () => {
     try {
       // Gọi API lưu câu hỏi
-      await axios.post('/api/save-question', editData);
+      await axios.post(`${url}/api/save-question`, editData);
       setQuestion(editData);
       setIsEditing(false);
     } catch (error) {
@@ -125,11 +139,11 @@ export default function QuestionDetail() {
           {isEditing ? (
             <input
               type="checkbox"
-              checked={editData.isMultiAnswer}
-              onChange={e => handleChange("isMultiAnswer", e.target.checked)}
+              checked={editData.isMultiAnswer === 2}
+              onChange={e => handleChange("isMultiAnswer", e.target.checked ? 2 : 1)}
             />
           ) : (
-            <input type="checkbox" checked={question.isMultiAnswer} readOnly />
+            <input type="checkbox" checked={question.isMultiAnswer === 2} readOnly />
           )}
           &nbsp;Dạng câu hỏi nhiều đáp án
         </label>

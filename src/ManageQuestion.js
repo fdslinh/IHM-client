@@ -35,7 +35,7 @@ function ManageQuestions() {
   };
 
   const handleCreateNew = () => {
-    navigate("/question-detail/new");
+    navigate("/question-detail/0");
   };
 
   return (
